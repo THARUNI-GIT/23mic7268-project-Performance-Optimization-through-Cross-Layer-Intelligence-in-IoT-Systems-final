@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\title{\textbf{Result 6: Computational Overhead per Decision Cycle vs Node Density}\\
+\large ACLIF --- Autonomous Cross-Layer Intelligence Framework}
+\author{B.~Tharuni~Sri~Sai\\
+\small School of Computer Science and Engineering, VIT-AP University, Amaravati, India\\
+\small ORCID: 0009-0004-9561-8985}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Experiment Overview}
+This document presents the detailed analysis for \textbf{Result 6}: Computational Overhead per Decision Cycle vs Node Density,
+as part of the ACLIF cross-layer IoT optimization framework evaluation.
+
+\section{Result Figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../figures/fig_compoverhead_nodes.png}
+  \caption{Computational Overhead per Decision Cycle vs Node Density. Results obtained from NS3 v3.38 simulations over a
+  100-node heterogeneous IoT network ($200\times200$~m$^2$), averaged over 10 runs
+  with 95\% confidence interval shading.}
+  \label{fig:compoverhead_vs_nodes}
+\end{figure}
+
+\section{Analysis and Discussion}
+Computational overhead per 500~ms decision cycle is measured as node density scales
+from 20 to 100. ACLIF's overhead grows moderately from 1.2 to 2.1~ms, remaining
+well within the 500~ms slot budget ($<0.5\%$ utilisation). FACSO incurs the highest
+overhead (5.4~ms at 100 nodes) due to its fuzzy rule evaluation complexity. ACLIF's
+DQN inference (forward pass through two hidden layers of 128 and 64 neurons over a
+15-dimensional input) is sub-millisecond, with the majority of overhead from NS3
+trace log parsing.
+
+\subsubsection*{Summary Statistics}
+\begin{tabular}{lcc}
+\toprule
+Method & Comp. Overhead @ 100 nodes (ms) & vs ACLIF \\
+\midrule
+E-GLBR & 1.2 & $-$42.9\% \\
+FDRL   & 1.8 & $-$14.3\% \\
+FACSO  & 5.4 & +157.1\% \\
+EEHCT  & 1.4 & $-$33.3\% \\
+IPSO   & 0.9 & $-$57.1\% \\
+\textbf{ACLIF} & \textbf{2.1} & --- \\
+\bottomrule
+\end{tabular}
+
+\section{Experimental Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Simulator      & NS3 v3.38 \\
+Nodes          & 100 sensor nodes \\
+Area           & $200 \times 200$~m$^2$ \\
+PHY standard   & IEEE 802.15.4 \\
+MAC protocol   & CSMA/CA \\
+Packet payload & 512 bytes \\
+Packet rate    & 5 pkt/s (default) \\
+Runs per config & 10 (different seeds) \\
+CI             & 95\% Student-$t$ \\
+\bottomrule
+\end{tabular}
+
+\section{Baselines}
+ACLIF is compared against: E-GLBR \cite{Benelhouri2023}, FDRL \cite{Suresh2024},
+FACSO \cite{Yang2024204}, EEHCT \cite{Chaurasiya202325941}, and IPSO \cite{Zhang2025}.
+
+\begin{thebibliography}{9}
+\bibitem{Benelhouri2023} Benelhouri et al., ``E-GLBR Genetic Algorithm Routing,'' 2023.
+\bibitem{Suresh2024} Suresh et al., ``FDRL Federated Deep RL Routing,'' 2024.
+\bibitem{Yang2024204} Yang et al., ``FACSO Fuzzy Adaptive Cross-Layer Scheduling,'' 2024.
+\bibitem{Chaurasiya202325941} Chaurasiya et al., ``EEHCT Energy-Efficient Clustering,'' 2023.
+\bibitem{Zhang2025} Zhang et al., ``IPSO-Based Multi-Hop Routing,'' 2025.
+\end{thebibliography}
+
+\end{document}

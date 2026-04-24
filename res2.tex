@@ -1,0 +1,100 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\title{\textbf{Result 1: Average End-to-End Delay vs Node Density}\\
+\large ACLIF --- Autonomous Cross-Layer Intelligence Framework}
+\author{B.~Tharuni~Sri~Sai\\
+\small School of Computer Science and Engineering, VIT-AP University, Amaravati, India\\
+\small ORCID: 0009-0004-9561-8985}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Experiment Overview}
+This document presents the detailed analysis for \textbf{Result 1}: Average End-to-End Delay vs Node Density,
+as part of the ACLIF cross-layer IoT optimization framework evaluation.
+
+\section{Result Figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../figures/fig_delay_nodes.png}
+  \caption{Average End-to-End Delay vs Node Density. Results obtained from NS3 v3.38 simulations over a
+  100-node heterogeneous IoT network ($200\times200$~m$^2$), averaged over 10 runs
+  with 95\% confidence interval shading.}
+  \label{fig:delay_vs_nodes}
+\end{figure}
+
+\section{Analysis and Discussion}
+This experiment evaluates the average end-to-end delay as the number of sensor nodes
+increases from 20 to 100 in a $200\times200$~m$^2$ deployment area. ACLIF consistently
+achieves the lowest delay across all node densities. At 100 nodes, ACLIF achieves
+91.5~ms, outperforming the best baseline IPSO at 118.2~ms. This 22.6\% improvement
+stems from the DQN agent's ability to simultaneously adapt MAC contention window,
+transmit power, and routing metric, reducing queuing at congested relay nodes.
+The joint optimization identifies that at high density, load-balanced routing
+($a_\mathrm{route}=2$) steers flows away from bottleneck nodes, while contention
+window expansion directly suppresses collision-induced retransmissions.
+
+\subsubsection*{Key Metric}
+\begin{equation}
+D_\mathrm{e2e}(\mathcal{P}) = \sum_{j=1}^{m-1}\left(
+  \frac{d_{n_j,n_{j+1}}}{c} + \frac{q_{n_j}(t)}{\mu_{n_j}} + \frac{k}{R_{n_j}}
+\right)
+\end{equation}
+
+\subsubsection*{Summary Statistics}
+\begin{tabular}{lcc}
+\toprule
+Method & Delay @ 100 nodes (ms) & \% vs ACLIF \\
+\midrule
+E-GLBR & 148.3 & +62.1\% \\
+FDRL   & 121.7 & +33.0\% \\
+FACSO  & 163.9 & +79.1\% \\
+EEHCT  & 135.4 & +47.9\% \\
+IPSO   & 118.2 & +29.2\% \\
+\textbf{ACLIF} & \textbf{91.5} & --- \\
+\bottomrule
+\end{tabular}
+
+\section{Experimental Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Simulator      & NS3 v3.38 \\
+Nodes          & 100 sensor nodes \\
+Area           & $200 \times 200$~m$^2$ \\
+PHY standard   & IEEE 802.15.4 \\
+MAC protocol   & CSMA/CA \\
+Packet payload & 512 bytes \\
+Packet rate    & 5 pkt/s (default) \\
+Runs per config & 10 (different seeds) \\
+CI             & 95\% Student-$t$ \\
+\bottomrule
+\end{tabular}
+
+\section{Baselines}
+ACLIF is compared against: E-GLBR \cite{Benelhouri2023}, FDRL \cite{Suresh2024},
+FACSO \cite{Yang2024204}, EEHCT \cite{Chaurasiya202325941}, and IPSO \cite{Zhang2025}.
+
+\begin{thebibliography}{9}
+\bibitem{Benelhouri2023} Benelhouri et al., ``E-GLBR Genetic Algorithm Routing,'' 2023.
+\bibitem{Suresh2024} Suresh et al., ``FDRL Federated Deep RL Routing,'' 2024.
+\bibitem{Yang2024204} Yang et al., ``FACSO Fuzzy Adaptive Cross-Layer Scheduling,'' 2024.
+\bibitem{Chaurasiya202325941} Chaurasiya et al., ``EEHCT Energy-Efficient Clustering,'' 2023.
+\bibitem{Zhang2025} Zhang et al., ``IPSO-Based Multi-Hop Routing,'' 2025.
+\end{thebibliography}
+
+\end{document}

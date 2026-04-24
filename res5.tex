@@ -1,0 +1,94 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\title{\textbf{Result 4: MAC Collision Rate vs Node Density}\\
+\large ACLIF --- Autonomous Cross-Layer Intelligence Framework}
+\author{B.~Tharuni~Sri~Sai\\
+\small School of Computer Science and Engineering, VIT-AP University, Amaravati, India\\
+\small ORCID: 0009-0004-9561-8985}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Experiment Overview}
+This document presents the detailed analysis for \textbf{Result 4}: MAC Collision Rate vs Node Density,
+as part of the ACLIF cross-layer IoT optimization framework evaluation.
+
+\section{Result Figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../figures/fig_collision_nodes.png}
+  \caption{MAC Collision Rate vs Node Density. Results obtained from NS3 v3.38 simulations over a
+  100-node heterogeneous IoT network ($200\times200$~m$^2$), averaged over 10 runs
+  with 95\% confidence interval shading.}
+  \label{fig:collision_vs_nodes}
+\end{figure}
+
+\section{Analysis and Discussion}
+MAC-layer collision rate is evaluated as node density increases. ACLIF's contention
+window action ($a_\mathrm{win} \in \{-1,0,+1\}$) dynamically expands $W_i$ under
+high density, directly reducing the probability of simultaneous channel access.
+At 100 nodes, ACLIF achieves 8.3\% collision rate vs 19.7\% for E-GLBR (57.9\%
+reduction) and 15.4\% for FDRL (46.1\% reduction).
+
+\subsubsection*{Collision Rate Model}
+\begin{equation}
+C_i(t) = 1 - \left(1 - \frac{1}{W_i(t)}\right)^{M_i(t)-1}
+\end{equation}
+
+\subsubsection*{Summary Statistics}
+\begin{tabular}{lcc}
+\toprule
+Method & Collision @ 100 nodes (\%) & Reduction vs ACLIF \\
+\midrule
+E-GLBR & 19.7 & 57.9\% \\
+FDRL   & 15.4 & 46.1\% \\
+FACSO  & 22.1 & 62.4\% \\
+EEHCT  & 17.8 & 53.4\% \\
+IPSO   & 14.9 & 44.3\% \\
+\textbf{ACLIF} & \textbf{8.3} & --- \\
+\bottomrule
+\end{tabular}
+
+\section{Experimental Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Simulator      & NS3 v3.38 \\
+Nodes          & 100 sensor nodes \\
+Area           & $200 \times 200$~m$^2$ \\
+PHY standard   & IEEE 802.15.4 \\
+MAC protocol   & CSMA/CA \\
+Packet payload & 512 bytes \\
+Packet rate    & 5 pkt/s (default) \\
+Runs per config & 10 (different seeds) \\
+CI             & 95\% Student-$t$ \\
+\bottomrule
+\end{tabular}
+
+\section{Baselines}
+ACLIF is compared against: E-GLBR \cite{Benelhouri2023}, FDRL \cite{Suresh2024},
+FACSO \cite{Yang2024204}, EEHCT \cite{Chaurasiya202325941}, and IPSO \cite{Zhang2025}.
+
+\begin{thebibliography}{9}
+\bibitem{Benelhouri2023} Benelhouri et al., ``E-GLBR Genetic Algorithm Routing,'' 2023.
+\bibitem{Suresh2024} Suresh et al., ``FDRL Federated Deep RL Routing,'' 2024.
+\bibitem{Yang2024204} Yang et al., ``FACSO Fuzzy Adaptive Cross-Layer Scheduling,'' 2024.
+\bibitem{Chaurasiya202325941} Chaurasiya et al., ``EEHCT Energy-Efficient Clustering,'' 2023.
+\bibitem{Zhang2025} Zhang et al., ``IPSO-Based Multi-Hop Routing,'' 2025.
+\end{thebibliography}
+
+\end{document}

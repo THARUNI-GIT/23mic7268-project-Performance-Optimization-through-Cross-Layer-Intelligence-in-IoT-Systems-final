@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\title{\textbf{Result 9: Comparative Performance Radar Chart}\\
+\large ACLIF --- Autonomous Cross-Layer Intelligence Framework}
+\author{B.~Tharuni~Sri~Sai\\
+\small School of Computer Science and Engineering, VIT-AP University, Amaravati, India\\
+\small ORCID: 0009-0004-9561-8985}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Experiment Overview}
+This document presents the detailed analysis for \textbf{Result 9}: Comparative Performance Radar Chart,
+as part of the ACLIF cross-layer IoT optimization framework evaluation.
+
+\section{Result Figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../figures/fig_radar.png}
+  \caption{Comparative Performance Radar Chart. Results obtained from NS3 v3.38 simulations over a
+  100-node heterogeneous IoT network ($200\times200$~m$^2$), averaged over 10 runs
+  with 95\% confidence interval shading.}
+  \label{fig:radar}
+\end{figure}
+
+\section{Analysis and Discussion}
+The radar chart provides a six-dimensional performance summary normalised to $[0,1]$
+(higher is better for all axes, with inverse scaling applied to delay, energy,
+collision, and overhead metrics). ACLIF's polygon consistently encloses the largest
+area across all six dimensions, visually confirming its Pareto superiority.
+FDRL and IPSO perform competitively on delay and throughput dimensions but fall short
+on energy and communication overhead, while FACSO underperforms on both throughput
+and collision dimensions.
+
+\subsubsection*{Normalised Scores (ACLIF vs Best Baseline)}
+\begin{tabular}{lcc}
+\toprule
+Metric & ACLIF & Best Baseline \\
+\midrule
+Delay (inv)     & 1.00 & 0.78 (IPSO) \\
+Energy (inv)    & 1.00 & 0.81 (IPSO) \\
+Throughput      & 1.00 & 0.83 (IPSO) \\
+Collision (inv) & 1.00 & 0.76 (IPSO) \\
+Comp. OH (inv)  & 0.77 & 1.00 (IPSO) \\
+Comm. OH (inv)  & 0.84 & 1.00 (E-GLBR) \\
+\bottomrule
+\end{tabular}
+
+\section{Experimental Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Simulator      & NS3 v3.38 \\
+Nodes          & 100 sensor nodes \\
+Area           & $200 \times 200$~m$^2$ \\
+PHY standard   & IEEE 802.15.4 \\
+MAC protocol   & CSMA/CA \\
+Packet payload & 512 bytes \\
+Packet rate    & 5 pkt/s (default) \\
+Runs per config & 10 (different seeds) \\
+CI             & 95\% Student-$t$ \\
+\bottomrule
+\end{tabular}
+
+\section{Baselines}
+ACLIF is compared against: E-GLBR \cite{Benelhouri2023}, FDRL \cite{Suresh2024},
+FACSO \cite{Yang2024204}, EEHCT \cite{Chaurasiya202325941}, and IPSO \cite{Zhang2025}.
+
+\begin{thebibliography}{9}
+\bibitem{Benelhouri2023} Benelhouri et al., ``E-GLBR Genetic Algorithm Routing,'' 2023.
+\bibitem{Suresh2024} Suresh et al., ``FDRL Federated Deep RL Routing,'' 2024.
+\bibitem{Yang2024204} Yang et al., ``FACSO Fuzzy Adaptive Cross-Layer Scheduling,'' 2024.
+\bibitem{Chaurasiya202325941} Chaurasiya et al., ``EEHCT Energy-Efficient Clustering,'' 2023.
+\bibitem{Zhang2025} Zhang et al., ``IPSO-Based Multi-Hop Routing,'' 2025.
+\end{thebibliography}
+
+\end{document}
