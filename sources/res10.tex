@@ -1,0 +1,86 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\title{\textbf{Result 10: DQN Training Convergence and Epsilon Decay}\\
+\large ACLIF --- Autonomous Cross-Layer Intelligence Framework}
+\author{B.~Tharuni~Sri~Sai\\
+\small School of Computer Science and Engineering, VIT-AP University, Amaravati, India\\
+\small ORCID: 0009-0004-9561-8985}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Experiment Overview}
+This document presents the detailed analysis for \textbf{Result 10}: DQN Training Convergence and Epsilon Decay,
+as part of the ACLIF cross-layer IoT optimization framework evaluation.
+
+\section{Result Figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../figures/fig_dqn_convergence.png}
+  \caption{DQN Training Convergence and Epsilon Decay. Results obtained from NS3 v3.38 simulations over a
+  100-node heterogeneous IoT network ($200\times200$~m$^2$), averaged over 10 runs
+  with 95\% confidence interval shading.}
+  \label{fig:dqn_convergence}
+\end{figure}
+
+\section{Analysis and Discussion}
+The DQN agent's cumulative reward and exploration rate $\epsilon$ are tracked over
+300 training episodes. The reward curve exhibits rapid improvement in the first
+100 episodes as the agent learns the dominant cross-layer trade-offs, followed by
+gradual refinement. A 15-episode moving average confirms stable convergence by
+episode 280. The $\epsilon$-greedy schedule decays from 1.0 to 0.1, balancing
+exploration of the 81-action space with exploitation of learned policies.
+
+\subsubsection*{Epsilon Schedule}
+\begin{equation}
+\epsilon(t) = \epsilon_{\min} + (\epsilon_{\max} - \epsilon_{\min}) \cdot e^{-\lambda_\epsilon t}
+\end{equation}
+With $\epsilon_{\min}=0.1$, $\epsilon_{\max}=1.0$, $\lambda_\epsilon=0.01$.
+
+\subsubsection*{Convergence Summary}
+Stable convergence achieved at episode $\approx 280$. Final mean reward: 1.78 (15-ep MA).
+Replay buffer size: 1000 transitions. Mini-batch size: 64. Target network sync: every 100 steps.
+
+\section{Experimental Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Simulator      & NS3 v3.38 \\
+Nodes          & 100 sensor nodes \\
+Area           & $200 \times 200$~m$^2$ \\
+PHY standard   & IEEE 802.15.4 \\
+MAC protocol   & CSMA/CA \\
+Packet payload & 512 bytes \\
+Packet rate    & 5 pkt/s (default) \\
+Runs per config & 10 (different seeds) \\
+CI             & 95\% Student-$t$ \\
+\bottomrule
+\end{tabular}
+
+\section{Baselines}
+ACLIF is compared against: E-GLBR \cite{Benelhouri2023}, FDRL \cite{Suresh2024},
+FACSO \cite{Yang2024204}, EEHCT \cite{Chaurasiya202325941}, and IPSO \cite{Zhang2025}.
+
+\begin{thebibliography}{9}
+\bibitem{Benelhouri2023} Benelhouri et al., ``E-GLBR Genetic Algorithm Routing,'' 2023.
+\bibitem{Suresh2024} Suresh et al., ``FDRL Federated Deep RL Routing,'' 2024.
+\bibitem{Yang2024204} Yang et al., ``FACSO Fuzzy Adaptive Cross-Layer Scheduling,'' 2024.
+\bibitem{Chaurasiya202325941} Chaurasiya et al., ``EEHCT Energy-Efficient Clustering,'' 2023.
+\bibitem{Zhang2025} Zhang et al., ``IPSO-Based Multi-Hop Routing,'' 2025.
+\end{thebibliography}
+
+\end{document}
