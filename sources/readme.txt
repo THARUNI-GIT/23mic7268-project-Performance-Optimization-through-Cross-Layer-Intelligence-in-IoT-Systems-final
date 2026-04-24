@@ -1,5 +1,4 @@
 ================================================================================
-  ACLIF — Autonomous Cross-Layer Intelligence Framework
   Performance Optimization through Cross-Layer Intelligence in IoT Systems
 ================================================================================
 
