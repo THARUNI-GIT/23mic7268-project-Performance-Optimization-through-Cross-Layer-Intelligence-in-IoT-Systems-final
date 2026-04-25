@@ -10,7 +10,6 @@
  * Compile:  ./ns3 build
  * Run:      ./ns3 run "scratch/delay_vs_nodes --nodeCount=100"
  *
- * Sweeps: nodeCount over [20, 40, 60, 80, 100]
  * Output metric: avgDelay
  */
 
