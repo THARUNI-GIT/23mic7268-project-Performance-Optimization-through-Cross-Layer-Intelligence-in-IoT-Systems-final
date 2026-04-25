@@ -1,0 +1,96 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\title{\textbf{Result 3: Network Throughput vs Packet Generation Rate}\\
+\large ACLIF --- Autonomous Cross-Layer Intelligence Framework}
+\author{B.~Tharuni~Sri~Sai\\
+\small School of Computer Science and Engineering, VIT-AP University, Amaravati, India\\
+\small ORCID: 0009-0004-9561-8985}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Experiment Overview}
+This document presents the detailed analysis for \textbf{Result 3}: Network Throughput vs Packet Generation Rate,
+as part of the ACLIF cross-layer IoT optimization framework evaluation.
+
+\section{Result Figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../figures/fig_throughput_rate.png}
+  \caption{Network Throughput vs Packet Generation Rate. Results obtained from NS3 v3.38 simulations over a
+  100-node heterogeneous IoT network ($200\times200$~m$^2$), averaged over 10 runs
+  with 95\% confidence interval shading.}
+  \label{fig:throughput_vs_rate}
+\end{figure}
+
+\section{Analysis and Discussion}
+Network throughput is measured against offered load from 1 to 10 pkt/s. ACLIF's
+transport rate adaptation prevents congestion collapse at high loads by proactively
+reducing send rates before queues overflow. At $\lambda=10$ pkt/s, ACLIF achieves
+83.7~kbps vs 69.8~kbps for IPSO (+19.9\%) and 51.6~kbps for FACSO (+62.2\%).
+The DQN learns to predict queue overflow from RTT measurements in the transport
+state sub-vector and preemptively engages rate backoff, a capability absent from
+all reactive baselines.
+
+\subsubsection*{Throughput Definition}
+\begin{equation}
+\Theta(t) = \frac{\sum_{i=1}^{N} \mathbf{1}[\mathrm{pkt}_i \text{ delivered at } t]}{\Delta t}
+\end{equation}
+
+\subsubsection*{Summary Statistics}
+\begin{tabular}{lcc}
+\toprule
+Method & Throughput @ $\lambda{=}10$ (kbps) & \% vs ACLIF \\
+\midrule
+E-GLBR & 58.2  & $-$30.5\% \\
+FDRL   & 67.4  & $-$19.5\% \\
+FACSO  & 51.6  & $-$38.3\% \\
+EEHCT  & 63.1  & $-$24.6\% \\
+IPSO   & 69.8  & $-$16.6\% \\
+\textbf{ACLIF} & \textbf{83.7} & --- \\
+\bottomrule
+\end{tabular}
+
+\section{Experimental Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Simulator      & NS3 v3.38 \\
+Nodes          & 100 sensor nodes \\
+Area           & $200 \times 200$~m$^2$ \\
+PHY standard   & IEEE 802.15.4 \\
+MAC protocol   & CSMA/CA \\
+Packet payload & 512 bytes \\
+Packet rate    & 5 pkt/s (default) \\
+Runs per config & 10 (different seeds) \\
+CI             & 95\% Student-$t$ \\
+\bottomrule
+\end{tabular}
+
+\section{Baselines}
+ACLIF is compared against: E-GLBR \cite{Benelhouri2023}, FDRL \cite{Suresh2024},
+FACSO \cite{Yang2024204}, EEHCT \cite{Chaurasiya202325941}, and IPSO \cite{Zhang2025}.
+
+\begin{thebibliography}{9}
+\bibitem{Benelhouri2023} Benelhouri et al., ``E-GLBR Genetic Algorithm Routing,'' 2023.
+\bibitem{Suresh2024} Suresh et al., ``FDRL Federated Deep RL Routing,'' 2024.
+\bibitem{Yang2024204} Yang et al., ``FACSO Fuzzy Adaptive Cross-Layer Scheduling,'' 2024.
+\bibitem{Chaurasiya202325941} Chaurasiya et al., ``EEHCT Energy-Efficient Clustering,'' 2023.
+\bibitem{Zhang2025} Zhang et al., ``IPSO-Based Multi-Hop Routing,'' 2025.
+\end{thebibliography}
+
+\end{document}

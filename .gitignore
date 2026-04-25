@@ -1,0 +1,13 @@
+*.zip
+*.tar
+*.pth
+*.pt
+*.log
+build/
+dist/
+__pycache__/
+*.o
+*.out
+*.ns3
+*.tr
+*.pcap
